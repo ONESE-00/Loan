@@ -1,0 +1,31 @@
+2025-02-11 11:11:48.228 [info] Log level: Info
+2025-02-11 11:11:48.228 [info] Validating found git in: "git"
+2025-02-11 11:11:48.228 [info] Using git "2.42.0" from "git"
+2025-02-11 11:12:15.129 [info] Log level: Info
+2025-02-11 11:12:15.129 [info] Validating found git in: "git"
+2025-02-11 11:12:15.129 [info] Using git "2.42.0" from "git"
+2025-02-11 11:12:15.129 [info] > git rev-parse --show-toplevel [7ms]
+2025-02-11 11:12:15.129 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:12:15.130 [info] > git rev-parse --show-toplevel [3ms]
+2025-02-11 11:12:15.130 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:12:15.138 [info] > git rev-parse --show-toplevel [1ms]
+2025-02-11 11:12:15.138 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:12:15.144 [info] > git rev-parse --show-toplevel [1ms]
+2025-02-11 11:12:15.144 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:12:47.859 [info] > git rev-parse --show-toplevel [1ms]
+2025-02-11 11:12:47.859 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys

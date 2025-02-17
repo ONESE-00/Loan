@@ -1,0 +1,62 @@
+<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> -->
+<div class="auth-container">
+    <div class="auth-card">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" class="logo-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+      </div>
+      <h2 class="get-started">Log In</h2>
+      <!-- <p class="welcome">Nice to See you Again</p> -->
+      
+      <!-- USERNAME INPUT FIELD -->
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="form-label" for="username">UserName</label><br>
+          <input 
+            class="input-box"
+            type="text" 
+            id="username"
+            formControlName="username"
+            placeholder="jayden"
+          >
+        </div>
+
+
+  <!-- PASSWORD INPUT FIELD -->
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label><br>
+          <input 
+            class="input-box"
+            type="password" 
+            id="password"
+            formControlName="password"
+          >
+          <a routerLink="/forgot-password" class="forgot-link">Forgot?</a>
+        </div>
+
+  <!-- LOG IN BUTTON -->
+        <button type="submit" class="submit-btn" [disabled]="!authForm.valid">
+          Log In
+        </button>
+      </form>
+
+  <!-- SIGN UP LINK -->
+      <p class="login-link">
+        Don't have an account? <a routerLink="/auth" >Sign Up</a>
+      </p>
+    </div>
+  
+    <div class="promo-card">
+      <h1 class="promo-title">
+        Enter<br>
+        the Future of<br> 
+      </h1>
+      <div class="promo-subtitle-2">
+      <h1> Payments,<br>today</h1>
+      </div>
+      <!-- <svg viewBox="0 0 24 24" class="logo-icon">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+      </svg> -->
+    </div>
+  </div>

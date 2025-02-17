@@ -1,0 +1,219 @@
+<head>
+    
+    <link rel="stylesheet" href="">
+</head>
+<div class="main-content">
+    <div class="shadow-box">
+        
+        <button class="add-customer-button" (click) = "openCreateModal()">Add Customer</button>
+        <button class="del-customer-button" (click) = "deleteCustomer()" *ngIf="selectedCustomers.size > 1" >Delete {{selectedCustomers.size}} Customers</button>
+    </div>
+
+    <div class="customer-table-box">
+        <h2>Customers</h2>
+
+        <div class="table-container" >
+            <table>
+                <!-- TABLE HEADER ROW -->
+                <thead>
+                    <tr>
+                        <th>
+                            <input 
+                            type="checkbox" 
+                            [checked] = "selectAll"
+                            (change) = "toggleSelectAll()"
+                            title="Select All Customers">
+
+                        </th>
+                        <!-- COLUMN HEADERS -->
+                        <th
+                            *ngFor = "let column of ['id','firstname', 'lastname', 'nationalid', 'phonenumber','created_at','updated_at']"
+                            (click) = "sort($any(column))"
+                            class = "sortable"
+                            [attr.title]=" 'Sort by' + column">
+                            {{column | titlecase}}
+                            <span class="sort-icon" *ngIf = "sortColumn === column">
+                                {{sortDirection ==='asc' ? '▲' : '▼'}}
+                            </span>
+                        </th>
+                        <th *ngIf="selectedCustomers.size < 2" >Actions</th>                            
+                    </tr>
+                </thead>
+
+                <!-- TABLE BODY -->
+                <tbody>
+                    <tr *ngFor="let customer of displayedCustomers">
+
+                        <!-- SELECTION CHECKBOXES -->
+                        <td>
+                            <input 
+                                type="checkbox"
+                                [checked] = "selectedCustomers.has(customer.id)"
+                                (change) = "toggleSelect(customer.id)"
+                                [attr.title] = "'Select' + customer.firstname">
+                        </td>
+
+                        <!-- CUSTOMER DATA -->
+                        <td>{{customer.id}}</td>
+                        <td>{{customer.firstname}}</td>
+                        <td>{{customer.lastname}}</td>
+                        <td>{{customer.nationalid}}</td>
+                        <td>{{customer.phonenumber}}</td>
+                        <td>{{customer.created_at | date:'short'}}</td>
+                        <td>{{customer.updated_at | date:'short'}}</td>
+                        
+
+                        <!-- ACTION BUTTON FOR EACH CUSTOMER ROW -->
+                        <td class="actions" *ngIf="selectedCustomers.size < 2" >
+                            <button 
+                                class="edit-cust-btn"
+                                (click) = "editCustomer(customer)"
+                                title="Edit"
+                                
+                                > Edit 
+                            </button>
+                            <button
+                                class="del-cust-btn"
+                                (click) = "deleteCustomer(customer)"
+                                title="Delete"
+                                
+                                > Delete
+                            </button>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <div class="pagination"></div>
+        </div>
+    
+    </div>
+
+    <!-- CREATE CUSTOMER POPUP WINDOW -->
+    <div class="modal-overlay-create-customer" *ngIf="showCreateModal" (click)="closeCreateModal()">
+        <div class="modal-content-create-customer" (click)="$event.stopPropagation()">
+            
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h2>Create New Customer</h2>
+            <button class="close-btn" (click)="closeCreateModal()" title="Close">×</button>
+          </div>
+    
+          <!-- CUSTOMER FORM -->
+          <form [formGroup]="customerForm" (ngSubmit)="createCustomer()" class="customer-form">
+
+
+            <!-- FIRST NAME-->
+            <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input 
+                id="firstname"
+                type="text"
+                formControlName="firstname"
+                placeholder="Enter first name"
+              >
+            </div>
+             
+    
+            <!-- LAST NAME -->
+            <div class="form-group">
+              <label for="lastname">Last Name</label>
+              <input 
+                id="lastname"
+                type="text"
+                formControlName="lastname"
+                placeholder="Enter last name"
+              >
+            </div>
+              
+    
+            <!-- NATIONAL ID -->
+            <div class="form-group">
+              <label for="nationalid">National ID</label>
+              <input 
+                id="nationalid"
+                type="text"
+                formControlName="nationalid"
+                placeholder="Enter national ID"
+              >
+            </div>
+         
+    
+            <!-- PHONE NUMBER -->
+            <div class="form-group">
+              <label for="phonenumber">Phone Number</label>
+              <input 
+                id="phonenumber"
+                type="tel"
+                formControlName="phonenumber"
+                placeholder="Enter phone number"
+              >
+            </div>
+         
+    
+            <!-- SUBMIT BUTTON -->
+            <button 
+
+
+              [disabled]="!customerForm.valid"
+              class="submit-btn"
+              >
+              Create Customer
+            </button>
+          </form>
+        </div>
+      </div>
+
+
+       <!-- EDIT CUSTOMER WINDOW -->
+       <div class="modal-overlay-edit-customer" *ngIf="isEditModalOpen" tabindex="-1" role="dialog" >
+       
+          <div class="modal-content-edit-customer" (click)="$event.stopPropagation()" >
+
+            <!-- MODAL HEADER -->
+            <div class="modal-header">
+              <h2 class="modal-title">Edit Customer</h2>
+              
+              <!-- CLOSE WINDOW BUTTON -->
+              <button  class="close-btn" (click)="closeEditModal()" title="Close">×</button>
+
+            </div>
+            
+              <form #editForm="ngForm" class="editCustomerForm">
+
+                <div class="form-group">
+                  <label for="name">First Name</label>
+                  <input type="text" class="form-control" id="name" 
+                         [(ngModel)]="edit_selected_customer.firstname" name="name" required>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="email">Last Name</label>
+                  <input type="text" class="form-control" id="lastname" 
+                         [(ngModel)]="edit_selected_customer.lastname" name="Last Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="national_id">National Id</label>
+                    <input type="text" class="form-control" id="national_id" 
+                           [(ngModel)]="edit_selected_customer.nationalid" name="Last Name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" 
+                         [(ngModel)]="edit_selected_customer.phonenumber" name="phone" required>
+                </div>
+
+              </form>
+              
+            <button class="submit-btn" (click)="saveChanges()" [disabled]="!editCustomerForm.valid">Save changes</button>
+            
+          </div>
+        
+      </div>
+      <div class="modal-backdrop fade show" *ngIf="isEditModalOpen"></div>
+    
+</div>

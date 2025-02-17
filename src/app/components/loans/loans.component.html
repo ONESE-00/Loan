@@ -1,0 +1,302 @@
+<head>
+    
+    <link rel="stylesheet" href="">
+</head>
+<div class="main-content">
+    <div class="shadow-box">
+        
+        <button class="add-loan-button" (click) = "openCreateModal()">NEW LOAN</button>
+        <button class="del-loan-button" (click) = "openEditModal()" >DELETE LOAN</button>
+    </div>
+
+    <!-- LOAN DISPLAY TABLE -->
+
+    <div class="loan-table-box">
+        <h2>Loans</h2>
+
+        <div class="table-container" >
+            <table>
+                <!-- TABLE HEADER ROW -->
+                <thead>
+                    <tr>
+                        <th>
+                            <input 
+                            type="checkbox" 
+                            [checked] = "selectAll"
+                            (change) = "toggleSelectAll()"
+                            title="Select All Loans">
+
+                        </th>
+                        <!-- COLUMN HEADERS -->
+                        <th
+                            *ngFor = "let column of ['loanid', 'principalamount', 'interestRate','repayment_period','frequency','status','amount']"
+                            (click) = "sort($any(column))"
+                            class = "sortable"
+                            [attr.title]=" 'Sort by' + column">
+                            {{column | titlecase}}
+                            <span class="sort-icon" *ngIf = "sortColumn === column">
+                                {{sortDirection ==='asc' ? '▲' : '▼'}}
+                            </span>
+                        </th>
+                        <th>Actions</th>                            
+                    </tr>
+                </thead>
+
+                <!-- TABLE BODY -->
+                <tbody>
+                    <tr *ngFor="let loan of displayedLoans">
+
+                        <!-- SELECTION CHECKBOXES -->
+                        <td>
+                            <input 
+                                type="checkbox"
+                                [checked] = "selectedLoans.has(loan.loanid)"
+                                (change) = "toggleSelect(loan.loanid)"
+                                [attr.title] = "'Select' + loan.loanid">
+                        </td>
+
+                        <!-- LOAN DATA -->
+                        <td>{{loan.loanid}}</td>
+                        <!-- <td>{{loan.customerid}}</td> -->
+                        <td>{{loan.principal_amount}}</td>
+                        <td>{{loan.interestRate}}</td>
+                        <td>{{loan.repayment_period}}</td>
+                        <td>{{loan.frequency}}</td>
+                        <td>{{loan.status}}</td>
+                        <td>{{loan.amount}}</td>
+                        
+                        
+                        <!-- ACTION BUTTON FOR EACH CUSTOMER ROW -->
+                        <td class="actions">
+                            <button 
+                                class="edit-loan-btn"
+                                (click) = "editLoan(loan)"
+                                title="Edit"
+                                > Edit 
+                            </button>
+                            <button
+                                class="del-loan-btn"
+                                (click) = "deleteLoan(loan)"
+                                title="Delete"
+                                > Delete
+                            </button>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <div class="pagination"></div>
+        </div>
+    
+    </div>
+
+    <!-- CREATE LOAN POPUP WINDOW -->
+    <div class="modal-overlay-create-loan" *ngIf="showCreateModal" (click)="closeCreateModal()">
+        <div class="modal-content-create-loan" (click)="$event.stopPropagation()">
+            
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h2>Create New Loan</h2>
+            <button class="close-btn" (click)="closeCreateModal()" title="Close">×</button>
+          </div>
+    
+          <!-- CUSTOMER FORM -->
+          <form [formGroup]="loanForm" (ngSubmit)="createLoan()" class="customer-form">
+
+
+            <!-- FIRST NAME-->
+            <div class="form-group">
+              <label for="searchTerm">Customer</label>
+              <input 
+                id="searchTerm"
+                [(ngModel)] = "searchTerm"
+                (input)="searchCustomers()"
+                type="text"
+                formControlName="firstname"
+                placeholder="Search by Name, Phone NUmber, or National ID"
+                autocomplete="off"
+                value="{{searchTerm}}"        
+                (focus)="searchCustomers()"
+              >
+              <ul class="customer-dropdown" *ngIf="filteredCustomers.length > 0">
+                <li *ngFor="let customer of filteredCustomers" (click)="selectCustomer(customer)">
+                  {{customer.id}} {{ customer.firstname }} {{ customer.lastname }} - {{ customer.nationalid }}
+                </li>
+              </ul>
+            </div>
+
+           
+    
+            <!-- PRINCIPAL AMOUNT -->
+            <div class="form-group">
+              <label for="principal_amount">Principal Amount</label>
+              <input 
+                id="principal_amount"
+                type="text"
+                formControlName="principalamount"
+                placeholder="Enter Principal Amount"
+              >
+            </div>
+              
+    
+            <!-- INTEREST RATE -->
+            <div class="form-group">
+              <label for="interest_rate">Interest Rate</label>
+              <input 
+                id="interestrate"
+                type="text"
+                formControlName="Interest Rate"
+                placeholder="Enter Interest in %"
+              >
+            </div>
+         
+    
+            <!-- REPAYMENT PERIOD -->
+            <div class="form-group">
+              <label for="repayment_period">Repayment Period</label>
+              <input 
+                id="repayment_period"
+                type="tel"
+                formControlName="phonenumber"
+                placeholder="Repayment period in months"
+              >
+            </div>
+
+           
+            <!-- PAYMENT FREQUENCY -->
+            <div class="form-group">
+                <label for="payment_frequency">Payment Frequency</label>
+                <input 
+                  id="payment_frequency"
+                  type="number"
+                  formControlName="payment_frequency"
+                  placeholder="Enter payment frequency"
+                >
+             </div>
+              <!-- LOAN STATUS -->
+             <div class="form-group">
+                <label for="loan_status">Loan Status</label>
+                <input 
+                  id="loan_status"
+                  type="text"
+                  formControlName="loan_status"
+                  placeholder="Enter the loan status"
+                >
+            </div>
+
+              <!-- TOTAL REPAYABLE AMOUNT -->
+            <div class="form-group">
+                <label for="total_repayable_amount">Total Repayable Amount</label>
+                <input 
+                  id="total_repayable_amount"
+                  type="number"
+                  formControlName="total_repayable_amount"
+                
+                >
+            </div>
+    
+            <!-- SUBMIT BUTTON -->
+            <button 
+            
+              [disabled]="!loanForm.valid"
+              class="submit-btn"
+              (click) = "createLoan()"
+              >
+              Create Loan
+            </button>
+          </form>
+        </div>
+      </div>
+
+
+       <!-- EDIT LOAN POPUP WINDOW -->
+    <div class="modal-overlay-edit-loan" *ngIf="isEditModalOpen" tabindex="-1" role="dialog" (click)="closeEditModal()">
+
+      <div class="modal-content-edit-loan" (click)="$event.stopPropagation()">
+          
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Loan</h2>
+
+            <!-- CLOSE BUTTON -->
+          <button class="close-btn" (click)="closeEditModal()" title="Close">×</button>
+        </div>
+  
+        <!-- CUSTOMER FORM -->
+        <form #loanForm="ngForm" class="editLoanForm">
+
+
+          <!-- FIRST NAME-->
+          <div class="form-group">
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="name" 
+                   [(ngModel)]="edit_selected_loan.customerid" name="name" required>
+          </div>
+           
+  
+          <!-- PRINCIPAL AMOUNT -->
+      
+          <div class="form-group">
+            <label for="principal_amount">Principal Amount</label>
+            <input type="number" class="form-control" id="principal_amount" 
+                   [(ngModel)]="edit_selected_loan.principal_amount" name="principal_amount" required>
+          </div>
+            
+  
+          <!-- INTEREST RATE -->
+          <div class="form-group">
+            <label for="interest_rate">Interest Rate</label>
+            <input type="number" class="form-control" id="interest_rate" 
+                   [(ngModel)]="edit_selected_loan.interest_rate" name="Interest Rate" required>
+          </div>
+       
+  
+          <!-- REPAYMENT PERIOD -->
+          <div class="form-group">
+            <label for="repayment_period">Repayment Period</label>
+            <input type="number" class="form-control" id="repayment_period" 
+                   [(ngModel)]="edit_selected_loan.repayment_period" name="Repayment Period" required>
+          </div>
+       
+
+         
+          <!-- PAYMENT FREQUENCY -->        
+          <div class="form-group">
+            <label for="payment_frequency">Payment Frequency</label>
+            <input type="number" class="form-control" id="payment_frequency" 
+                   [(ngModel)]="edit_selected_loan.payment_frequency" name="Payment Frequency" required>
+          </div>
+
+
+       
+          <!-- LOAN STATUS -->
+          <div class="form-group">
+            <label for="loan_status">Loan Status</label>
+            <input type="number" class="form-control" id="loan" 
+                   [(ngModel)]="edit_selected_loan.loan_status" name="Loan Status" required>
+          </div>
+       
+          <!-- TOTAL REPAYABLE AMOUNT -->
+          <div class="form-group">
+            <label for="total_repayable_amount">Total Repayable Amount</label>
+            <input type="number" class="form-control" id="total_repayable_amount" 
+                   [(ngModel)]="edit_selected_loan.total_repayable_amount" name="Total Repayable Amount" required>
+          </div>
+       
+  
+          
+        
+        </form>
+      
+        
+        <button class="submit-btn" (click)="saveChanges()" 
+                [disabled]="!editLoanForm.valid">Save changes</button>
+    
+    </div>
+
+    <div class="modal-backdrop fade show" *ngIf="isEditModalOpen"></div>
+        
+  </div>
+      
+    

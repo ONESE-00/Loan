@@ -1,0 +1,102 @@
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
+</head>
+
+<div class="auth-container">
+    <div class="auth-card">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" class="logo-icon">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+      </div>
+      <h2 class="get-started">Get Started</h2>
+      <p class="welcome">Welcome to EMTECH – Let's create your account</p>
+  <!-- USERNAME INPUT FIELD -->
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label><br>
+          <input 
+            class="input-box"
+            type="text" 
+            id="username"
+            formControlName="username"
+            placeholder="jayden"
+          >
+        </div>
+        <!-- FIRST NAME INPUT FIELD -->
+        <div class="form-group">
+            <label class="form-label" for="firstname">FirstName</label><br>
+            <input 
+              class="input-box"
+              type="text" 
+              id="firstname"
+              formControlName="firstname"
+              placeholder="jayden"
+            >
+          </div>
+          <!--LASTNAME INPUT FIELD  -->
+          <div class="form-group">
+            <label class="form-label" for="lastname">Last Name</label><br>
+            <input 
+              class="input-box"
+              type="text" 
+              id="latname"
+              formControlName="lastname"
+              placeholder="Kim"
+            >
+          </div>
+          <!-- EMAIL INPUT FIELD -->
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label><br>
+            <input 
+              class="input-box"
+              type="email" 
+              id="email"
+              formControlName="email"
+              placeholder="jayden@emtech.co.ke"
+            >
+          </div>
+  
+        <!-- PASSWORD INPUT FIELD -->
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label><br>
+          <input 
+            class="input-box"
+            type="password" 
+            id="password"
+            formControlName="password"
+          >
+          <div *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched" class="error"></div>
+
+          <!-- FORGOT PASSWORD -->
+          <a routerLink="/forgot-password" class="forgot-link">Forgot?</a>
+        </div>
+        
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="submit-btn" [disabled]="!authForm.valid">
+          Sign up
+        </button>
+      </form>
+  
+        <!-- LOG IN BUTTON -->
+      <p class="login-link">
+        Already have an account? <a routerLink="/login" >Log in</a>
+      </p>
+    </div>
+  
+    <div class="promo-card">
+      <h1 class="promo-title">
+        Enter<br>
+        the Future of<br> 
+      </h1>
+      <div class="promo-subtitle-2">
+      <h1> Payments,<br>today</h1>
+      </div>
+      <!-- <svg viewBox="0 0 24 24" class="logo-icon">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+      </svg> -->
+    </div>
+  </div>

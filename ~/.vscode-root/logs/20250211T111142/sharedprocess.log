@@ -1,0 +1,10 @@
+2025-02-11 11:11:45.770 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-02-11 11:11:46.202 [warning] Failed to create default profile extensions manifest in extensions installation folder. file:///root/.vscode/extensions Unable to create file 'vscode-userdata:/root/.vscode/extensions/extensions.json' that already exists when overwrite flag is not set
+2025-02-11 11:11:46.202 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-02-11 11:12:26.362 [info] Getting Manifest... angular.ng-template
+2025-02-11 11:12:26.374 [info] Installing extension: angular.ng-template
+2025-02-11 11:12:46.500 [info] Extension signature is verified: angular.ng-template
+2025-02-11 11:12:47.664 [info] Extracted extension to /root/.vscode/extensions/.420d0971-93e0-4d48-9f12-07d51347a39b: angular.ng-template
+2025-02-11 11:12:47.675 [info] Renamed to /root/.vscode/extensions/angular.ng-template-19.0.4
+2025-02-11 11:12:47.677 [info] Extracting extension completed. angular.ng-template
+2025-02-11 11:12:47.685 [info] Extension installed successfully: angular.ng-template

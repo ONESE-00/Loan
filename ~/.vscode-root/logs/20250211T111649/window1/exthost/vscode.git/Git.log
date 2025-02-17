@@ -1,0 +1,38 @@
+2025-02-11 11:16:51.559 [info] Log level: Info
+2025-02-11 11:16:51.559 [info] Validating found git in: "git"
+2025-02-11 11:16:51.559 [info] Using git "2.42.0" from "git"
+2025-02-11 11:16:51.559 [info] > git rev-parse --show-toplevel [13ms]
+2025-02-11 11:16:51.559 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:51.559 [info] > git rev-parse --show-toplevel [12ms]
+2025-02-11 11:16:51.559 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:51.559 [info] > git rev-parse --show-toplevel [20ms]
+2025-02-11 11:16:51.559 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:51.561 [info] > git rev-parse --show-toplevel [3ms]
+2025-02-11 11:16:51.561 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:51.638 [info] > git rev-parse --show-toplevel [5ms]
+2025-02-11 11:16:51.638 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:51.923 [info] > git rev-parse --show-toplevel [5ms]
+2025-02-11 11:16:51.924 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
+2025-02-11 11:16:52.128 [info] > git rev-parse --show-toplevel [4ms]
+2025-02-11 11:16:52.128 [info] fatal: detected dubious ownership in repository at '/home/onese/Documents/EMTECH/loan_management_sys'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/onese/Documents/EMTECH/loan_management_sys
