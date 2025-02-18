@@ -18,6 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RepaymentsComponent } from './components/repayments/repayments.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { RegisterComponent } from './components/register/register.component';
     LoansComponent,
     RepaymentsComponent,
     RegisterComponent,
+    DashboardComponent,
     ],
     
   imports: [  

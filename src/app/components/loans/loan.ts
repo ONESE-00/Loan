@@ -3,7 +3,7 @@ import { ArrayType } from "@angular/compiler";
 export interface Loan {
 
     id: number;
-    customerId: number;
+    customerId: string;
     principalAmount: number;
     interestRate: number;
     repaymentPeriod: number;

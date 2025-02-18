@@ -8,6 +8,7 @@ import { LoansComponent } from './components/loans/loans.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { RepaymentsComponent } from './components/repayments/repayments.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
 
@@ -36,7 +37,7 @@ const routes: Routes = [
  
   {
     path: 'dashboard',
-    component: DashboardCardComponent
+    component: DashboardComponent
     
   },
 

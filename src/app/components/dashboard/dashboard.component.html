@@ -1,0 +1,16 @@
+<div class="dashboard-container" *ngIf="Statistics.length > 0">
+    <div class="dashboard-box">
+        <h3>Total Customers</h3>
+        <p>5</p>
+    </div>
+
+    <div class="dashboard-box">
+        <h3>Disbursed Loans</h3>
+        <p>{{ Statistics.totalDisbursed }}</p>
+    </div>
+
+    <div class="dashboard-box">
+        <h3>Total Loaned Amount</h3>
+        <p>{{ Statistics.activeLoans }}</p>
+    </div>
+</div>
