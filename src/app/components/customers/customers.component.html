@@ -5,7 +5,7 @@
 <div class="main-content">
     <div class="shadow-box">
         
-        <button class="add-customer-button" (click) = "openCreateModal()">Add Customer</button>
+        <button class="add-customer-button" (click) = "openCreateModal()" *ngIf="selectedCustomers.size < 2" >Add Customer</button>
         <button class="del-customer-button" (click) = "deleteCustomer()" *ngIf="selectedCustomers.size > 1" >Delete {{selectedCustomers.size}} Customers</button>
     </div>
 
@@ -181,26 +181,28 @@
             </div>
             
               <form #editForm="ngForm" class="editCustomerForm">
-
+                <!-- EDIT THE FIRST NAME -->
                 <div class="form-group">
-                  <label for="name">First Name</label>
-                  <input type="text" class="form-control" id="name" 
-                         [(ngModel)]="edit_selected_customer.firstname" name="name" required>
+                  <label for="firstname">First Name</label>
+                  <input type="text" class="form-control" id="firstname" 
+                         [(ngModel)]="edit_selected_customer.firstname" name="firstname" required>
                 </div>
 
-
+                <!-- EDIT THE LAST NAME -->
                 <div class="form-group">
-                  <label for="email">Last Name</label>
+                  <label for="lastname">Last Name</label>
                   <input type="text" class="form-control" id="lastname" 
-                         [(ngModel)]="edit_selected_customer.lastname" name="Last Name" required>
+                         [(ngModel)]="edit_selected_customer.lastname" name="lastname" required>
                 </div>
-
+                  
+                <!-- EDIT THE NATIOAL ID  -->
                 <div class="form-group">
                     <label for="national_id">National Id</label>
                     <input type="text" class="form-control" id="national_id" 
                            [(ngModel)]="edit_selected_customer.nationalid" name="Last Name" required>
                 </div>
 
+                  <!-- EDIT THE PHONE NUMBER -->
                 <div class="form-group">
                   <label for="phone">Phone Number</label>
                   <input type="tel" class="form-control" id="phone" 

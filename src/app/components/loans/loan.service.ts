@@ -9,8 +9,14 @@ import { map } from 'rxjs';
 })
 export class LoanService {
 
+
+  // //MORGAN SERVER
   private loansUrl      = "http://172.16.8.12:8000/loans"
   private customerUrl   = "http://172.16.8.12:8000/customers"
+
+  //SERVER 2
+  // private loansUrl      = "http://172.16.8.19:8081/loans"
+  // private customerUrl   = "http://172.16.8.19:8081/customers"
 
   constructor(private HttpClient: HttpClient) { }
   
@@ -45,6 +51,13 @@ export class LoanService {
       map(customers => customers.map(customer => customer.name))  
     );
     // return this.HttpClient.get<any>
+  }
+
+
+  //BULK DELETING LOANS
+  bulkDeleteLoans(LoanIds: number[]): Observable<any> {
+    
+    return this.HttpClient.request('delete', `${this.loansUrl}`, { body: LoanIds });
   }
   
 

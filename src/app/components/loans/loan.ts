@@ -2,10 +2,11 @@ import { ArrayType } from "@angular/compiler";
 
 export interface Loan {
 
-    loanid: number;
-    principal_amount: number;
+    id: number;
+    customerId: number;
+    principalAmount: number;
     interestRate: number;
-    repayment_period: number;
+    repaymentPeriod: number;
     duedate: string;
     startdate: string;
     frequency: string;

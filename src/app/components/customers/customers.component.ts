@@ -28,6 +28,7 @@ export class CustomersComponent implements OnInit{
   showCreateModal = false;
   isEditModalOpen = false;
   edit_selected_customer: any = {}
+  delete_selected_customer: any = {}
   customerForm: FormGroup;
   editCustomerForm: FormGroup;
   filteredCustomers: string[]=[];
@@ -260,8 +261,11 @@ export class CustomersComponent implements OnInit{
 //DELETE CUSTOMER(s)
   deleteCustomer(customer?: Customer) {
     
+    
+    if(!customer) return
+
     //Deleting 1 customer
-    if (this.selectedCustomers.size === 1 && customer ) {
+    if (this.selectedCustomers.size === 0) {
       
     
     if(confirm(`Are you sure you want to delete ${customer.firstname} ${customer.lastname}?`)){

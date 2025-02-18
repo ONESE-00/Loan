@@ -19,13 +19,12 @@ export class LoansComponent implements OnInit {
     
     //initialize the form with the validators
     this.loanForm = this.formbuilder.group({
-      customerid: ['', [Validators.required]],
-      principal_amount: ['',[Validators.required]],
-      repayment_period: ['',[Validators.required]],
+      customerId: ['', [Validators.required]],
+      principalAmount: ['',[Validators.required]],
+      interestRate: ['',[Validators.required]],
+      repaymentPeriod: ['',[Validators.required]],
       duedate: ['',[Validators.required]],
-      frequency: ['', [Validators.required]],
-      status: ['',[Validators.required]],
-      totalRepayableAmount: ['',[Validators.required]]
+      status: ['',[Validators.required]], 
     });
 
     this.editLoanForm = this.formbuilder.group({
@@ -72,7 +71,7 @@ export class LoansComponent implements OnInit {
   displayedLoans: Loan[] = [];
 
 //SORTING PROPERTIES
-  sortColumn: keyof Loan = 'loanid';
+  sortColumn: keyof Loan = 'id';
   sortDirection: 'asc' | 'desc' = 'asc';
   selectedLoans: Set<number> = new Set();
 
@@ -100,27 +99,28 @@ export class LoansComponent implements OnInit {
   }
 
   createLoan(){
-    if (this.loanForm.valid){
-      const newLoan  = this.loanForm.value
+    
+    const newLoan  = this.loanForm.value
+    
 
-      this.LoanService.createLoan(newLoan).subscribe({
+    this.LoanService.createLoan(newLoan).subscribe({
 
-        next: (response) => {
+      next: (response) => {
 
-          this.loans.push(response);
-          this.updateDisplayedLoans();
-          this.closeCreateModal();
+        this.loans.push(response);
+        this.updateDisplayedLoans();
+        this.closeCreateModal();
 
-          alert("CUSTOMER CREATED SUCCESSFULLY")
-        },
-      
-        error: (error) => {
-          console.error("ERROR CREATING LOAN",error)
-          alert("ERROR CREATING LOAN")
+        
+      },
+    
+      error: (error) => {
+        console.error("ERROR CREATING LOAN",error)
+        alert("ERROR CREATING LOAN")
         }
       });
       
-    }
+    
   }
 
   
@@ -163,9 +163,12 @@ export class LoansComponent implements OnInit {
   }
 
   toggleSelectAll() {
+
+    this.selectAll = !this.selectAll
+
     if (this.selectAll) {
       //select all displayed customers
-      this.displayedLoans.forEach(loan => this.selectedLoans.add(loan.loanid));
+      this.displayedLoans.forEach(loan => this.selectedLoans.add(loan.id));
     }
     else {
       //clear all selections
@@ -173,15 +176,15 @@ export class LoansComponent implements OnInit {
     }
   }
 
-  toggleSelect(loanid: number) {
-    if(this.selectedCustomers.has(loanid)) {
-      this.selectedCustomers.delete(loanid);
+  toggleSelect(id: number) {
+    if(this.selectedLoans.has(id)) {
+      this.selectedLoans.delete(id);
       this.selectAll = false;
     } else {
-      this.selectedCustomers.add(loanid);
+      this.selectedLoans.add(id);
 
       //check if all displayed customers are selected
-      if (this.displayedLoans.every(loan => this.selectedLoans.has(loan.loanid))) {
+      if (this.displayedLoans.every(loan => this.selectedLoans.has(loan.id))) {
         this.selectAll = true;
       }
     }
@@ -212,11 +215,12 @@ export class LoansComponent implements OnInit {
 
       next: (response) => {
 
-        const index = this.loans.findIndex( loan => loan.loanid === this.edit_selected_loan.id);
+        const index = this.loans.findIndex( loan => loan.id === this.edit_selected_loan.id);
         
         if (index !== -1){
           this.loans[index] = {...this.edit_selected_loan }
         }
+        this.updateDisplayedLoans()
         this.closeEditModal()
       },
 
@@ -243,23 +247,65 @@ export class LoansComponent implements OnInit {
 
   }
 
-  deleteLoan(loan: Loan) {
+  deleteLoan(loan?: Loan) {
 
-    if(confirm(`Are you sure you want to delete ${loan.loanid} of Value ${loan.amount}?`)){
+    if(!loan) return
 
-      this.LoanService.deleteLoan(loan.loanid).subscribe ({
+    //Deleting 1 customer
+    if(this.selectedLoans.size === 0) {
 
-        next: () =>{
-          
-          //remove loan from the local array
-          this.loans = this.loans.filter(loan => loan.loanid !== loan.loanid)
+      if(confirm(`Are you sure you want to delete  LOAN ${loan.id} of Value ${loan.amount}?`)){
 
-          //update the display
-          this.updateDisplayedLoans()
-        }
-      });
+        this.LoanService.deleteLoan(loan.id).subscribe ({
+  
+          next: () =>{
+            
+            //remove loan from the local array
+            this.loans = this.loans.filter(loan => loan.id !== loan.id)
+  
+            //update the display
+            this.updateDisplayedLoans()
+          }
+        });
+      }
     }
-  }
+
+    //BULK DELETING LOANS
+    else{
+
+      if (confirm(`Are you sure you want to delete these ${this.selectedLoans.size} loans?`)) {
+
+        //convert the set to array
+        const LoanIds = Array.from(this.selectedLoans)
+
+        this.LoanService.bulkDeleteLoans(LoanIds).subscribe({
+          
+          next: () => {
+            this.loans = this.loans.filter(loan => !this.selectedLoans.has(loan.id))
+
+              //UPDATE THE DISPLAYED LOANS
+              this.updateDisplayedLoans()
+              // alert("${this.selectedLoans.size} LOANS DELETED SUCCESSFULLY")
+
+            //CLEAR THE SELECTION ON THE TABLE
+            this.selectedLoans.clear()
+            this.selectAll = false;
+
+          
+          },
+
+          error: (error) => {
+
+            console.error("ENCOUNTERED ERROR WHILE BULK DELETING LOANS",error)
+          }
+        })
+    }
+      
+
+
+    }}
+
+   
 
   
 
@@ -301,11 +347,12 @@ export class LoansComponent implements OnInit {
 
 
   selectCustomer(customer: Customer) {
+    
     this.loanForm.patchValue({
-      customerid: customer.id
+      customerId: customer.id 
   });
 
-  this.searchTerm = `${customer.firstname} ${customer.lastname}`
+  this.searchTerm = ` ${customer.id} ${customer.firstname} ${customer.lastname}`
   this.filteredCustomers = [];
 
   
