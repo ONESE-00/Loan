@@ -19,10 +19,15 @@ export class DashboardService {
   //   return this.HttpClient.get<Statistics[]>(this.statisticsUrl)
   // }
 
-  getStats(): Observable<Statistics> {
-    return this.HttpClient.get<Statistics[]>(this.statisticsUrl).pipe(
-      map(response => response[0])
-    );
+  // getStats(): Observable<Statistics> {
+  //   return this.HttpClient.get<Statistics[]>(this.statisticsUrl).pipe(
+  //     map(response => response[0])
+  //   );
+  // }
+
+  getStats(): Observable<any> {
+
+    return this.HttpClient.get<Statistics[]>(this.statisticsUrl)
   }
 
 

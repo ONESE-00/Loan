@@ -4,6 +4,9 @@ import { Statistics } from './statistics';
 import { DashboardService } from './dashboard.service';
 import { map } from 'rxjs';
 
+import { Chart,registerables } from 'chart.js';
+Chart.register(...registerables)
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,38 +19,147 @@ export class DashboardComponent {
   ngOnInit(): void{
 
     this.loadStats()
+    this.createLineChart()
   }
 
   Statistics: Statistics[] = [];
 
-  // loadStats() {
+  loadStats() {
 
-  //   this.DashboardService.getStats().subscribe({
+    const lineChart = document.getElementById("LineChart") as HTMLCanvasElement
 
-  //     next: (response) => {
+    this.DashboardService.getStats().subscribe({
 
-  //       this.Statistics = response;
-  //       console.log("STATS!!",this.Statistics)
+      next: (response) => {
 
-  //     },
+        this.Statistics = response;
+        console.log("STATS!!",this.Statistics)
 
-  //     error: (error) => {
-  //       console.error("ERROR FETCHING THE STATS",error)
-  //   }})
-  // }
+        //LINE CHART
+        // new Chart(lineChart, {
+        //   type: 'line',
+        //   data: {
+        //     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        //     datasets: [{
+        //       label: 'Total Disbursed',
+        //       data: response.map(stat => stat.totalDisbursed),
+        //       borderColor: 'rgb(75, 192, 192)',
+        //       tension: 0.1
+        //     }, {
+        //       label: 'Total Paid',
+        //       data: response.map(stat => stat.totalPaid),
+        //       borderColor: 'rgb(255, 99, 132)',
+        //       tension: 0.1
+        //     }]
+        //   },
+        //   options: {
+        //     responsive: true,
+        //     maintainAspectRatio: false,
+        //     scales: {
+        //       y: {
+        //         beginAtZero: true
+        //       }
+        //     }
+        //   }
+        // });
 
-  loadStats(): void {
-    this.dashboardService.getStats().subscribe({
-      next: (response: Statistics[]) => {
-        // Assuming we want the first item from the array
-        this.statistics = response[0];
-        console.log('Statistics loaded:', this.statistics);
+
+
       },
+
       error: (error) => {
-        console.error('Error fetching statistics:', error);
+        console.error("ERROR FETCHING THE STATS",error)
+    }})
+  }
+
+  createLineChart() {
+    const ctx = document.getElementById('myLineChart') as HTMLCanvasElement;
+    
+    // Dummy data
+    const dummyData = {
+      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      totalDisbursed: [50000, 65000, 85000, 75000, 90000, 100000],
+      totalPaid: [30000, 45000, 60000, 55000, 70000, 85000],
+      outstandingBalance: [20000, 20000, 25000, 20000, 20000, 15000]
+    };
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dummyData.months,
+        datasets: [
+          {
+            label: 'Total Disbursed',
+            data: dummyData.totalDisbursed,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+            fill: false
+          },
+          {
+            label: 'Total Paid',
+            data: dummyData.totalPaid,
+            borderColor: 'rgb(255,255,255)',
+            tension: 0.1,
+            fill: false
+          },
+          {
+            label: 'Outstanding Balance',
+            data: dummyData.outstandingBalance,
+            borderColor: 'rgb(255, 205, 86)',
+            tension: 0.1,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Loan Statistics Over Time',
+            font: {
+              size: 26
+            }
+          },
+          legend: {
+            position: 'top'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Amount (KES)',
+              color: 'rgb(255,255,255)'
+            },
+            ticks: {
+              color: 'rgb(255,255,255)'  // Gray color for y-axis labels
+            },
+            // grid: {
+            //   color: '#e5e7eb'  // Light gray for grid lines
+            // }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Month',
+              color: 'rgb(255,255,255)'
+            },
+            ticks: {
+              color: 'rgb(255,255,255)'  // Gray color for x-axis labels
+            },
+            // grid: {
+            //   color: '#e5e7eb'  // Light gray for grid lines
+            // } 
+          }
+        }
       }
     });
   }
 
+
+  
 
 }
