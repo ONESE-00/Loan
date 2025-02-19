@@ -2,6 +2,7 @@
     <div class="shadow-box">
 
         <button class="add-loan-button" (click) ="openPayModal()">PAY LOAN</button>
+        <button class="calc-loan-button" (click) ="openCalcModal()">CALCULATE LOAN</button>
         <!-- <button class="del-loan-button" (click) = "deleteLoan()" *ngIf="selectedLoans.size > 1">DELETE {{selectedLoans.size}} LOANS</button> -->
     </div>
 
@@ -90,6 +91,87 @@
 
 
 
+        <!-- CALCULATE LOAN POPUP WINDOW -->
+        <div class="modal-overlay-calc-loan" *ngIf="showCalcModal" (click)="closeCalcModal()">
+          <div class="modal-content-calc-loan" (click)="$event.stopPropagation()">
+              
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h2>Calculate Loan</h2>
+              <button class="close-btn" (click)="closeCalcModal()" title="Close">×</button>
+            </div>
+      
+            <!-- CUSTOMER FORM -->
+            <form [formGroup]="payForm" (ngSubmit)="payLoan()" class="pay-form">
+  
+  
+              <!-- FIRST NAME
+              <div class="form-group">
+                <label for="searchTerm">Customer</label>
+                <input 
+                  id="customerId"
+                 
+                  (input)="searchCustomers()"
+                  type="text"
+                  formControlName="customerId"
+                  placeholder="Search by Name, Phone NUmber, or National ID"
+                  autocomplete="off"
+                  [value]="searchTerm"        
+                  (focus)="searchCustomers()"
+                >
+                <ul class="customer-dropdown" *ngIf="filteredCustomers.length > 0">
+                  <li *ngFor="let customer of filteredCustomers" (click)="selectCustomer(customer)">
+                    {{customer.id}} {{ customer.firstname }} {{ customer.lastname }} - {{ customer.nationalid }}
+                  </li>
+                </ul>
+              </div> -->
+  
+  
+              <!-- LOAN -->
+              <div class="form-group">
+                  <label for="searchTerm">Loan</label>
+                  <input 
+                    id="id"
+                   (input)="searchLoan()"
+                    type="text"
+                    formControlName="id"
+                    placeholder="Search by Loan ID or Principal Amount"
+                    autocomplete="off"
+                    [value]="searchTerm"        
+                    (focus)="searchLoan()"
+                  >
+                  <ul class="loan-dropdown" *ngIf="filteredLoans.length > 0">
+                    <li *ngFor="let loan of filteredLoans" (click)="selectLoan(loan)">
+                      {{loan.id}}
+                      <!-- {{loan.id}} => {{ loan.amount }} Ksh -->
+                    </li>
+                  </ul>
+                </div>
+  
+             
+      
+              <!--  PRINCIPAL AMOUNT -->
+              <div class="form-group">
+                <label for="principalAmount">AMOUNT</label>
+                <input 
+                  id="amount"
+                  type="text"
+                  formControlName="amount"
+                  placeholder="Ksh"
+                >
+              </div>
+        
+      
+              <!-- SUBMIT BUTTON -->
+              <button
+                class="submit-btn"
+                (click) = "payLoan()"
+                >
+                Pay Loan
+              </button>
+            </form>
+          </div>
+        </div>
 
 
 

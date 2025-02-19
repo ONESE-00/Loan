@@ -20,6 +20,12 @@ export class DashboardComponent {
 
     this.loadStats()
     this.createLineChart()
+    this.createDoughnutChart()
+    
+
+    this.createMiniLineChart('miniChart1', [10, 15, 12, 18, 20, 15, 19], '#FFFFFF'); // App Traffic
+    this.createMiniLineChart('miniChart2', [3.0, 3.5, 4.2, 3.8, 4.0, 3.9], '#FFFFFF'); // Average Rating
+    this.createMiniLineChart('miniChart3', [20, 22, 18, 24, 26, 30], '#FFFFFF'); // Site Visitors
   }
 
   Statistics: Statistics[] = [];
@@ -137,6 +143,9 @@ export class DashboardComponent {
             ticks: {
               color: 'rgb(255,255,255)'  // Gray color for y-axis labels
             },
+            border: {
+              color: 'rgb(255,255,255)'
+            }
             // grid: {
             //   color: '#e5e7eb'  // Light gray for grid lines
             // }
@@ -150,6 +159,9 @@ export class DashboardComponent {
             ticks: {
               color: 'rgb(255,255,255)'  // Gray color for x-axis labels
             },
+            border: {
+              color: 'rgb(255,255,255)'
+            }
             // grid: {
             //   color: '#e5e7eb'  // Light gray for grid lines
             // } 
@@ -158,6 +170,83 @@ export class DashboardComponent {
       }
     });
   }
+
+  //CREATE THE DOUGHNUT CHART
+  createDoughnutChart() {
+    const ctx = document.getElementById('myDoughnutChart') as HTMLCanvasElement;
+  
+    const data = {
+      labels: ["Active", "Disbursed", "Pending", "Paid Off", "In Repayment", "Defaulted"],
+      datasets: [{
+        data: [6, 6, 1, 0, 5, 1], // Values
+        backgroundColor: [
+          '#39FF14', // Active - Teal
+          '#00FFFF',  // Disbursed - Orange
+          '#FFBF00',  // Pending - Yellow
+          '#7DF9FF',  // Paid Off - Blue
+          '#D200D2', // In Repayment - Purple
+          '#DC143C'   // Defaulted - Red
+        ],
+        borderWidth: 0,
+        hoverOffset: 10 // Adds hover effect
+      }]
+    };
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          title: {
+            display: true,
+            text: 'Loan Status Distribution',
+            font: {
+              size: 22
+            }
+          },
+          legend: {
+            position: 'top'
+          }
+        }
+      }
+    });
+  }
+  
+  //CREATE THE MINI LINE CHARTS
+  createMiniLineChart(chartId: string, chartData: number[], chartColor: string) {
+    const ctx = document.getElementById(chartId) as HTMLCanvasElement;
+    
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Array(chartData.length).fill(''), // Empty labels
+          datasets: [{
+            data: chartData,
+            borderColor: chartColor,
+            borderWidth: 2,
+            fill: false,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { display: false },
+            y: { display: false }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+  }
+
 
 
   

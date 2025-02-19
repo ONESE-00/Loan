@@ -23,6 +23,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class RepaymentsComponent {
 
   payForm: FormGroup;
+  calcForm: FormGroup
   filteredCustomers: Customer[] = [];
   filteredLoans: Loan[]=[]
   searchTerm: string = ''
@@ -33,6 +34,7 @@ export class RepaymentsComponent {
 
   //pop-up windows controllers
   showPayModal = false;
+  showCalcModal = false;
   
 
 
@@ -50,11 +52,30 @@ export class RepaymentsComponent {
     amount: ['',[Validators.required]]
   });
 
+  this.calcForm = this.formbuilder.group({
+
+    id: ['',[Validators.required]],
+    principalAmount: ['',[Validators.required]],
+    repaymentPeriod: ['',[Validators.required]],
+    interestRate: ['',[Validators.required]]
+  })
+
 
   }
   openPayModal() {
 
     this.showPayModal = true
+  }
+
+  openCalcModal() {
+
+    this.showCalcModal = true
+  }
+
+  closeCalcModal(){
+
+    this.showCalcModal = false
+    this.calcForm.reset
   }
 
   closePayModal() {
@@ -98,16 +119,20 @@ export class RepaymentsComponent {
   }
 
 
-
-
-
   //PAY LOAN
   payLoan(){
     return
   }
 
- 
+  //take the values from the form and submit to the api 
+  calculateLoan() {
+
+    if(this.payForm.valid) {
+
+    
+    }
 
 
+  }
 
 }

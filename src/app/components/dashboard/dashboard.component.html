@@ -1,40 +1,45 @@
-<div class="container">
-    <!-- Main box - 70% width -->
-    <div class="main-box">
-        
-        <canvas id="myLineChart"></canvas>
+<div class="main-content">
+    <div class="container">
+        <!-- Main box - 70% width -->
+        <div class="main-box">
+            
+            <canvas id="myLineChart"></canvas>
+        </div>
+
+        <!-- Right column container -->
+        <div class="right-column">
+            <!-- Top box -->
+            <div class="side-box">
+                <canvas id="myDoughnutChart"></canvas>
+            </div>
+            
+            <!-- Bottom box -->
+            <!-- <div class="side-box">
+                <h2>Total Loaned Amount</h2>
+                <p>{{ Statistics[0].totalDisbursed }}</p>
+            </div> -->
+        </div>
     </div>
 
-    <!-- Right column container -->
-    <div class="right-column">
-        <!-- Top box -->
-        <div class="side-box">
-            <h2>Disbursed Loans</h2>
-            <p>{{ Statistics[0].activeLoans }}</p>
+    <div class="dashboard-container" >
+        <div class="dashboard-box">
+            <h3>Total Customers</h3>
+            <p>5</p>
+            <canvas id="miniChart1" class="chart-container"></canvas>
         </div>
-        
-        <!-- Bottom box -->
-        <div class="side-box">
-            <h2>Total Loaned Amount</h2>
-            <p>{{ Statistics[0].totalDisbursed }}</p>
+
+        <div class="dashboard-box">
+            <h3>Disbursed Loans</h3>
+            <p>12</p>
+            <canvas id="miniChart2" class="chart-container"></canvas>
+        </div>
+
+        <div class="dashboard-box">
+            <h3>Total Loaned Amount</h3>
+            <p>Ksh. 3,900,900</p>
+            <canvas id="miniChart3" class="chart-container"></canvas>
         </div>
     </div>
+
+
 </div>
-
-
-<!-- <div class="dashboard-container" *ngIf="Statistics.length > 0">
-    <div class="dashboard-box">
-        <h3>Total Customers</h3>
-        <p>5</p>
-    </div>
-
-    <div class="dashboard-box">
-        <h3>Disbursed Loans</h3>
-        <p>{{ Statistics[0].totalDisbursed }}</p>
-    </div>
-
-    <div class="dashboard-box">
-        <h3>Total Loaned Amount</h3>
-        <p>{{ Statistics[0].activeLoans }}</p>
-    </div>
-</div> -->

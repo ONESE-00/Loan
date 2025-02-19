@@ -13,6 +13,7 @@ export class RepaymentsService {
 // //MORGAN SERVER
 private loansUrl      = "http://172.16.8.12:8000/loans"
 private customerUrl   = "http://172.16.8.12:8000/customers"
+private calcLoanUrl   =  "http://172.16.8.12:8000/loans/calculate"
 
 //SERVER 2
 // private loansUrl      = "http://172.16.8.19:8081/loans"
@@ -26,6 +27,18 @@ private customerUrl   = "http://172.16.8.12:8000/customers"
     return this.HttpClient.get<Loan[]>(this.loansUrl)
     
   }
+
+
+  calculateLoan(loanData: any): Observable<any> {
+    return this.HttpClient.post<any>(this.calcLoanUrl, loanData);
+  }
+
+  //calculate loan
+  // calcLoan(loanData: any): Observable<any>{
+
+
+  //   this.HttpClient.post<any>(this.calcLoanUrl,loanData)
+  // }
   
 
 
